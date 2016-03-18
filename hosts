@@ -1,0 +1,6 @@
+hosts="ose31master1.example.com ose31master2.example.com ose31master3.example.com ose31node1.example.com ose31node2.example.com"
+master="ose31master.example.com"
+master1="ose31master1.example.com"
+masters="ose31master1.example.com ose31master2.example.com ose31master3.example.com"
+nodes="ose31node1.example.com ose31node2.example.com"
+

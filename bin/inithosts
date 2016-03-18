@@ -1,0 +1,19 @@
+source ./hosts
+
+function sshkeycopy
+{
+ for i in ${hosts}
+ do
+   ssh-copy-id root@$i
+   scp -r tools/ root@$i:/root/bin/
+ done
+}
+function shrinksystem
+{
+  sshremote ">/var/log/messages"
+  sshremote "rm -rf /var/log/messages-*"
+  sshremote "/root/bin/shrink"
+}
+sshkeycopy
+shrinksystem
+

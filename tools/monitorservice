@@ -1,0 +1,16 @@
+#!/bin/bash
+seq=0
+while true; do
+  curl --connect-timeout 10 -s 172.30.144.85:5000 2>&1 ; echo "$?  `date`" >>/root/registery.log
+  curl --connect-timeout 10 -s 172.30.45.175:80 2>&1 ; echo "$?  `date`" >>/root/router.log
+
+  curl --connect-timeout 10 -s 172.30.232.235:8080 | awk '/count-value/ {"date"| getline date; print $3,date }' >>/root/cakephpmysql.log
+
+  curl --connect-timeout 10 -s 172.30.5.173:8080 -X POST -d "summary=service${seq}" -d "description=service${seq}" ; echo "$? service${seq} `date`" >> /root/jboss.log
+  curl --connect-timeout 10 -s eap-app-epa64mysqls2i.ose-upgrade.example.com -X POST -d "summary=route${seq}" -d "description=route${seq}" ; echo "$? route${seq} `date`" >> /root/jboss.log
+
+  curl --connect-timeout 10 -s -k https://172.30.8.181:8443 2>&1 | grep service${seq} ; echo "$? service${seq} `date`" >> /root/securejboss.log
+  curl --connect-timeout 10 -s -k https://secure-eap-app-epa64mysqls2i.ose-upgrade.example.com 2>&1 | grep route${seq} ; echo "$? route${seq} `date`" >> /root/securejboss.log
+  sleep 10
+  seq=`expr $seq + 1`
+done

@@ -1,0 +1,1 @@
+oc $* --config=user1.config

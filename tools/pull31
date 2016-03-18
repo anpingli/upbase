@@ -1,0 +1,15 @@
+docker pull registry.access.redhat.com/openshift3/ose:v3.1.1.6
+docker pull registry.access.redhat.com/openshift3/node:v3.1.1.6
+docker pull registry.access.redhat.com/openshift3/openvswitch:v3.1.1.6
+docker rmi  registry.example.com/openshift3/ose:v3.1.1.6
+docker rmi  registry.example.com/openshift3/node:v3.1.1.6
+docker rmi  registry.example.com/openshift3/openvswitch:v3.1.1.6
+docker tag registry.access.redhat.com/openshift3/ose:v3.1.1.6    registry.example.com/openshift3/ose:v3.1.1.6
+docker tag registry.access.redhat.com/openshift3/node:v3.1.1.6   registry.example.com/openshift3/node:v3.1.1.6
+docker tag registry.access.redhat.com/openshift3/openvswitch:v3.1.1.6  registry.example.com/openshift3/openvswitch:v3.1.1.6
+docker push  registry.example.com/openshift3/ose:v3.1.1.6
+docker push  registry.example.com/openshift3/node:v3.1.1.6
+docker push  registry.example.com/openshift3/openvswitch:v3.1.1.6
+docker rmi registry.access.redhat.com/openshift3/ose:v3.1.1.6
+docker rmi registry.access.redhat.com/openshift3/node:v3.1.1.6
+docker rmi registry.access.redhat.com/openshift3/openvswitch:v3.1.1.6

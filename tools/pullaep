@@ -1,0 +1,7 @@
+docker pull aep3_beta/aep
+docker pull aep3_beta/aep-deployer
+docker pull aep3_beta/aep-docker-registry
+docker pull aep3_beta/aep-haproxy-router
+docker pull aep3_beta/aep-pod
+docker pull aep3_beta/node
+docker pull aep3_beta/openvswitch

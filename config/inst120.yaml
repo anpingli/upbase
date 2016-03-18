@@ -1,0 +1,20 @@
+ansible_config: /usr/share/atomic-openshift-utils/ansible.cfg
+ansible_log_path: /tmp/ansible.log
+ansible_ssh_user: root
+hosts:
+- connect_to: 10.14.6.126
+  hostname: openshift-126.example.com
+  ip: 192.168.1.49
+  node: true
+  public_hostname: openshift-126.example.com
+  public_ip: 192.168.1.49
+- connect_to: 10.14.6.120
+  hostname: openshift-120.example.com
+  ip: 192.168.1.48
+  master: true
+  node: true
+  public_hostname: openshift-120.example.com
+  public_ip: 192.168.1.48
+variant: openshift-enterprise
+variant_version: '3.1'
+version: v1

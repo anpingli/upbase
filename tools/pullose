@@ -1,0 +1,9 @@
+docker pull "openshift3/ose-docker-builder
+docker pull "openshift3/ose-sti-builder
+docker pull "openshift3/ose-deployer
+docker pull "openshift3/ose-pod
+docker pull "openshift3/ose
+docker pull "openshift3/node
+docker pull "openshift3/openvswitch
+
+

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+fold1=$1
+fold2=$2
+
+if [ "$fold1" = "" ] || [ "$fold2" = "" ]; then
+  echo "usage: cmpupgrade fold1 fold2"
+fi
+
+compareFOLD( )
+{
+    for file in $1/*
+    do
+        if [ -d $file ]
+        then
+            compareFOLD $file
+        elif [ -f $file ]
+        then
+            if [ ! -L $file ]
+            then
+                file2="$fold2/${file##$fold1/}"
+                  echo "diff $file $file2"
+                  diff $file $file2
+
+                  if [ $? -ne 0 ]
+                  then
+                      echo "-------------------different-----------------------------------------"
+                      echo $file
+                      echo $file2
+                      echo "---------------------------------------------------------------------"
+                  fi
+                fi
+        else
+            echo "test"
+        fi
+    done
+}
+
+compareFOLD $fold1
+

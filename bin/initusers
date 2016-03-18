@@ -1,0 +1,14 @@
+source hosts
+rm admin.config
+rm user1.config
+function initadmin
+{
+  scp root@${master1}:/etc/origin/master/admin.kubeconfig  admin.config
+}
+function initusers
+{
+  oc login ${master} --config user1.config
+}
+initadmin
+initusers
+

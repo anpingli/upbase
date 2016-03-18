@@ -1,0 +1,12 @@
+source ./hosts
+
+mkdir temp
+function copyrepos()
+{
+ for i in ${hosts}
+ do
+    scp root@$i:$1 $2
+ done
+
+}
+copyrepos

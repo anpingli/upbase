@@ -1,0 +1,2 @@
+dprocid=$(docker inspect --format {{.State.Pid}} $1)
+nsenter -m -u -n -i -p -t $dprocid

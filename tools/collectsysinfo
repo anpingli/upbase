@@ -1,0 +1,12 @@
+rpm -qa|grep openshift >/tmp/upgraderpms
+rpm -qa|grep openvswitch >> /tmp/upgraderpms
+rpm -qa|grep docker >> /tmp/upgraderpms
+systemctl status atomic-openshift-master > /tmp/upgradeatomic-openshift-master
+systemctl status atomic-openshift-master-api > /tmp/upgradeatomic-openshift-master-api
+systemctl status atomic-openshift-master-controllers > /tmp/upgradeatomic-openshift-master-controllers
+systemctl status atomic-openshift-node > /tmp/upgradeatomic-openshift-node
+systemctl status openvswitch > /tmp/upgradeopenvswitch
+ovs-vsctl list-ports br0 > /tmp/upgradeovsports
+iptables -L -t nat > /tmp//upgradeiptables
+docker ps > /tmp/upgradedockerps
+

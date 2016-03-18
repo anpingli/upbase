@@ -1,0 +1,46 @@
+ansible_config: /usr/share/atomic-openshift-utils/ansible.cfg
+ansible_log_path: /tmp/ansible.log
+ansible_ssh_user: root
+hosts:
+- connect_to: ose31master1.example.com
+  hostname: ose31master1.example.com
+  ip: 10.66.78.32
+  master: true
+  node: true
+  public_hostname: ose31master1.example.com
+  public_ip: 10.66.78.32
+- connect_to: ose31master2.example.com
+  hostname: ose31master2.example.com
+  ip: 10.66.78.34
+  master: true
+  node: true
+  public_hostname: ose31master2.example.com
+  public_ip: 10.66.78.34
+- connect_to: ose31master3.example.com
+  hostname: ose31master3.example.com
+  ip: 10.66.79.26
+  master: true
+  node: true
+  public_hostname: ose31master3.example.com
+  public_ip: 10.66.79.26
+- connect_to: ose31node1.example.com
+  hostname: ose31node1.example.com
+  ip: 10.66.79.42
+  node: true
+  public_hostname: ose31node1.example.com
+  public_ip: 10.66.79.42
+- connect_to: ose31node2.example.com
+  hostname: ose31node2.example.com
+  ip: 10.66.78.76
+  node: true
+  public_hostname: ose31node2.example.com
+  public_ip: 10.66.78.76
+- connect_to: ose31master.example.com
+  hostname: ose31master.example.com
+  ip: 10.66.79.40
+  master_lb: true
+  public_hostname: ose31master.example.com
+  public_ip: 10.66.79.40
+variant: openshift-enterprise
+variant_version: '3.1'
+version: v1

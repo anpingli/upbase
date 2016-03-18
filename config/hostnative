@@ -1,0 +1,70 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+lb
+nfs
+
+[OSEv3:vars]
+ansible_ssh_user=root
+openshift_use_openshift_sdn=true
+deployment_type=openshift-enterprise
+osm_default_subdomain=ose-upgrade.example.com
+openshift_master_identity_providers=[{'name': 'allow_all', 'login': 'true', 'challenge': 'true', 'kind': 'AllowAllPasswordIdentityProvider'}]
+
+#containerized=true
+#use_cluster_metrics=true
+openshift_set_hostname=True
+#openshift_set_node_ip=true
+#openshift_pkg_version=-3.1.0.4
+#openshift_override_hostname_check=true
+#osm_cluster_network_cidr="10.2.0.0/16"
+#openshift_master_portal_net="172.31.0.0/16"
+#debug_level=5
+#osm_default_node_selector="region=primary"
+os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
+#cli_docker_additional_registries=registry.example.com:5000
+#cli_docker_insecure_registries=registry.example.com:5000
+openshift_node_kubelet_args={'minimum-container-ttl-duration': ["10s"], 'maximum-dead-containers-per-container': ["1"], 'maximum-dead-containers': ["20"], 'image-gc-high-threshold': ["90"], 'image-gc-low-threshold': ["80"]}
+
+openshift_hosted_registry_storage_kind=nfs
+#openshift_hosted_registry_storage_host=nfs.example.com
+openshift_hosted_registry_storage_nfs_directory=/var/export/
+openshift_hosted_registry_storage_nfs_options='*(rw,sync,all_squash)'
+openshift_hosted_registry_storage_volume_name=regvol
+openshift_hosted_registry_storage_volume_size=5G
+
+
+#openshift_master_cluster_method=pacemaker
+#openshift_master_cluster_password=openshift_cluster
+#openshift_master_cluster_vip=10.66.78.11
+#openshift_master_cluster_public_vip=10.66.78.11
+#openshift_master_cluster_hostname=ose31master.example.com
+#openshift_master_cluster_public_hostname=ose31master.example.com
+
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=ose31master.example.com
+openshift_master_cluster_public_hostname=ose31master.example.com
+
+[masters]
+ose31master1.example.com 
+ose31master2.example.com
+ose31master3.example.com
+
+[etcd]
+ose31master1.example.com
+ose31master2.example.com
+ose31master3.example.com
+
+[nodes]
+ose31master1.example.com  openshift_node_labels="{'region': 'logmetrics', 'zone': 'default'}" openshift_hostname=ose31master1.example.com openshift_public_hostname=ose31master1.example.com
+ose31master2.example.com  openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_hostname=ose31master2.example.com openshift_public_hostname=ose31master2.example.com openshift_schedulable=true
+ose31master3.example.com  openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_hostname=ose31master3.example.com openshift_public_hostname=ose31master3.example.com openshift_schedulable=true
+ose31node1.example.com  openshift_node_labels="{'region': 'primary', 'zone': 'west'}" openshift_hostname=ose31node1.example.com openshift_public_hostname=ose31node1.example.com
+ose31node2.example.com  openshift_node_labels="{'region': 'primary', 'zone': 'east'}" openshift_hostname=ose31node2.example.com openshift_public_hostname=ose31node2.example.com
+
+[lb]
+ose31master.example.com
+
+[nfs]
+ose31master1.example.com

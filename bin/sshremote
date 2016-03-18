@@ -1,0 +1,24 @@
+source ./hosts
+
+if [ "x$1" = "xmaster" ]; then
+  hosts=$master
+  argvs=${*//master/}
+elif [ "x$1" = "xmasters" ]; then
+  hosts=$masters
+  argvs=${*//masters/}
+elif [ "x$1" = "xnodes" ]; then
+ hosts=$nodes
+ argvs=${*//nodes/}
+elif [ "x$1" = "xmaster1" ]; then
+ hosts=$master1
+ argvs=${*//master1/}
+else
+  argvs=${*}
+fi
+
+
+for i in ${hosts}
+do
+  echo "----Execute $argvs in $i"
+  ssh root@$i $argvs
+done

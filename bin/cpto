@@ -1,0 +1,26 @@
+source ./hosts
+from=$1
+choice=$2
+
+if [ "x$choice" = "xmaster" ]; then
+  hosts=$master
+  to=$3
+elif [ "x$choice" = "xmasters" ]; then
+  hosts=$masters
+  to=$3
+elif [ "x$choice" = "xnodes" ]; then
+ hosts=$nodes
+ to=$3
+else
+ to=$2 
+fi
+
+function copyfiles()
+{
+ for i in ${hosts}
+ do
+    scp $from root@$i:$to
+ done
+
+}
+copyfiles

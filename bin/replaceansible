@@ -1,0 +1,10 @@
+source ./hosts
+
+function replaceansible()
+{
+  cp openshift_examples/image-streams-rhel7.json /usr/share/ansible/openshift-ansible/roles/openshift_examples/files/examples/image-streams/image-streams-rhel7.json
+  cp openshift_examples/jboss-image-streams.json /usr/share/ansible/openshift-ansible/roles/openshift_examples/files/examples/xpaas-streams/jboss-image-streams.json
+}
+
+replaceansible
+

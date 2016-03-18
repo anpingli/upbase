@@ -1,0 +1,20 @@
+[OSEv3:children]
+masters
+nodes
+
+[OSEv3:vars]
+ansible_ssh_user=root
+#openshift_pkg_version=-3.1.0.4
+deployment_type=atomic-enterprise
+#openshift_set_node_ip=true
+openshift_use_openshift_sdn=true
+osm_default_subdomain=ose-appgjpp.com.cn
+
+# host group for masters
+
+[masters]
+10.14.6.120  openshift_hostname=openshift-120.example.com  openshift_public_hostname=openshift-120.example.com
+
+[nodes]
+10.14.6.120  openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_hostname=openshift-120.example.com openshift_public_hostname=openshift-120.example.com openshift_schedulable=true
+10.14.6.126  openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_hostname=openshift-126.example.com openshift_public_hostname=openshift-126.example.com

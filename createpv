@@ -1,0 +1,6 @@
+for i in `ls -1 repo/jsonpv/pv*.json`; do
+  sed -i s/nfs.example.com/nfs.example.com/  $i
+  sed -i s/host1/host1/  $i
+  roc create -f $i
+done
+
