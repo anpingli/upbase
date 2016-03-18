@@ -8,4 +8,4 @@ echo "shrink system to free space"
 ansible all -m copy -a "src=tools/ dest=/root/bin/ directory_mode mode=777" -i host
 ansible all -m shell -a ">/var/log/messages" -i host
 ansible all -m shell -a "rm -rf /var/log/messages-*" -i host
-ansible all -m shell -a "/root/bin/shrink" -i host
+ansible all -m shell -a "/root/bin/shrink || /bin/true" -i host
