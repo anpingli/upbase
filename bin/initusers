@@ -1,13 +1,19 @@
-source hosts
-rm admin.config
-rm user1.config
+public_name=`grep openshift_master_cluster_public_hostname host | awk -F= '{print $2}'|uniq`
+
+master1=`ansible masters --list-hosts -i host | awk '{print $1}'`
+if [ "x$public_name" = "x" ]; then
+  public_name=$master1
+fi
+
 function initadmin
 {
   scp root@${master1}:/etc/origin/master/admin.kubeconfig  admin.config
 }
+
 function initusers
 {
-  oc login ${master} --config user1.config
+  rm user.config
+  oc login ${public_name} --config user.config
 }
 initadmin
 initusers

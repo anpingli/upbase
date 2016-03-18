@@ -1,28 +1,36 @@
+hosts=`ansible all --list-hosts -i host`
+function collectconfig()
+{
  topdir=$(date +%Y%m%d%H%M)
  mkdir $topdir
- sysdir="$topdir/sysinfo/$i"
- logdir="$topdir/logs/$i"
- mkdir -p $sysdir
- mkdir -p $logdir
- echo "collection system information from remote"
- ansible all -m shell -a "/root/bin/collectsysinfo"
- echo "fetch system information from remote"
- ansible all -m fetch -a "src=/lib/systemd/system/docker* --dest=$sysdir"
- ansible all -m fetch -a "src=/usr/lib/systemd/system/openvswitch* --dest=$sysdir"
- ansible all -m fetch -a "src=/usr/lib/systemd/system/atomic-openshift* --dest=$sysdir"
- ansible all -m fetch -a "src=/etc/sysconfig/docker* --dest=$sysdir"
- ansible all -m fetch -a "src=/etc/sysconfig/openvswitch* --dest=$sysdir"
- ansible all -m fetch -a "src=/etc/sysconfig/atomic-openshift* --dest=$sysdir"
- ansible all -m fetch -a "src=/etc/origin --dest=$sysdir"
- ansible all -m fetch -a "src=/tmp/systeminfo --dest=$sysdir"
- ansible all -m fetch -a "src=/root/*.log --dest=$logdir"
- ansible all -m fetch -a "src=/var/log/messages --dest=$logdir"
- ansible all -m fetch -a "src=/var/log/containers --dest=$logdir"
- ansible all -m fetch -a "src=/var/log/openvswitch/*.log --dest=$logdir"
-
+ for i in ${hosts}
+ do
+    sysdir="$topdir/sysinfo/$i"
+    logdir="$topdir/logs/$i"
+    mkdir -p $sysdir
+    mkdir -p $logdir
+    echo "scp data to $sysdir"
+    ssh root@$i /root/bin/collectsysinfo
+    scp -r root@$i:/usr/lib/systemd/system/docker* "$sysdir"
+    scp -r root@$i:/usr/lib/systemd/system/openvswitch* "$sysdir"
+    scp -r root@$i:/usr/lib/systemd/system/atomic-openshift* "$sysdir"
+    scp root@$i:/etc/sysconfig/docker* "$sysdir"
+    scp root@$i:/etc/sysconfig/openvswitch* "$sysdir"
+    scp root@$i:/etc/sysconfig/atomic-openshift* "$sysdir"
+    scp -r root@$i:/etc/origin "$sysdir"
+    scp root@$i:/tmp/systeminfo "$sysdir"
+    scp root@$i:/root/*.log "$logdir"
+    scp root@$i:/var/log/messages "$logdir"
+    scp -r root@$i:/var/log/containers "$logdir"
+    scp root@$i:/var/log/openvswitch/*.log "$logdir"
+ done
  mkdir "$sysdir/client"
- roc get nodes >> "$sysdir/client/ose-info-nodes"
- roc project default
- roc get all >> "$sysdir/client/ose-info-all"
- roc get template -n openshift  >> "$sysdir/client/ose-info-templates"
- roc get is -n openshift  >> "$sysdir/client/ose-info-is"
+ roc get nodes >> "$sysdir/client/openshiftinfo"
+ roc get projects >> "$sysdir/client/openshiftinfo"
+ roc get all >> "$sysdir/client/openshiftinfo"
+ roc get template -n openshift  >> "$sysdir/client/openshiftinfo"
+ roc get is -n openshift  >> "$sysdir/client/openshiftinfo"
+ roc get pv  >> "$sysdir/client/openshiftinfo"
+}
+
+collectconfig

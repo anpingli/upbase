@@ -1,10 +1,19 @@
-if [ "x$1" = "xmasters" ]; then
+if [ "x$*" = "x" ]; then
+  hosts=`ansible all --list-hosts -i host`
+  for i in ${hosts//}; do
+     ssh root@$i
+  done
+  exit 0
+fi
+if [ "$1" = "masters" ]; then
    cmds=${*//masters/}
    ansible  masters -m shell -a "$cmds"  -i host
-elif [ "x$1" = "xnodes" ]; then
+elif [ "$1" = "nodes" ]; then
    cmds=${*//nodes/}
    ansible  nodes -m shell -a "$cmds"  -i host
+elif [ "$1" = "all" ]; then
+   cmds=${*//all/}
+   ansible  all -m shell -a "$cmds"  -i host
 else
-  cmds=$*
-  ansible  all -m shell -a "$cmds"  -i host
+   ansible  all -m shell -a "$*"  -i host
 fi
