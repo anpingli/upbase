@@ -1,19 +1,11 @@
-source ./hosts
-
-function sshkeycopy
-{
- for i in ${hosts}
- do
-   ssh-copy-id root@$i
-   scp -r tools/ root@$i:/root/bin/
+ansible all -m shell ssh-copy-id root@$i
  done
 }
-function shrinksystem
-{
-  sshremote ">/var/log/messages"
-  sshremote "rm -rf /var/log/messages-*"
-  sshremote "/root/bin/shrink"
-}
+
 sshkeycopy
-shrinksystem
+echo "shrink system to free space"
+ansible all -m copy -a "src=tools/ dest=/root/bin/" -i host
+ansible all -m shell -a ">/var/log/messages" -i host
+ansible all -m shell -a "rm -rf /var/log/messages-*" -i host
+ansible all -m shell -a "/root/bin/shrink" -i host
 

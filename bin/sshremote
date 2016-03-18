@@ -1,24 +1,10 @@
-source ./hosts
-
-if [ "x$1" = "xmaster" ]; then
-  hosts=$master
-  argvs=${*//master/}
-elif [ "x$1" = "xmasters" ]; then
-  hosts=$masters
-  argvs=${*//masters/}
+if [ "x$1" = "xmasters" ]; then
+   cmds=${*//masters/}
+   ansible  masters -m shell -a "$cmds"  -i host
 elif [ "x$1" = "xnodes" ]; then
- hosts=$nodes
- argvs=${*//nodes/}
-elif [ "x$1" = "xmaster1" ]; then
- hosts=$master1
- argvs=${*//master1/}
+   cmds=${*//nodes/}
+   ansible  nodes -m shell -a "$cmds"  -i host
 else
-  argvs=${*}
+  cmds=$*
+  ansible  all -m shell -a "$cmds"  -i host
 fi
-
-
-for i in ${hosts}
-do
-  echo "----Execute $argvs in $i"
-  ssh root@$i $argvs
-done

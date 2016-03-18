@@ -3,6 +3,8 @@ for i in ${hosts}
 do
   ssh root@$i sed -i 's/INSECURE_REGISTRY/#INSECURE_REGISTRY/' /etc/sysconfig/docker
   ssh root@$i sed -i 's/ADD_REGISTRY/#ADD_REGISTRY/' /etc/sysconfig/docker
-  ssh root@$i "echo INSECURE_REGISTRY=\'--insecure-registry registry.example.com\'>>/etc/sysconfig/docker"
-  ssh root@$i "echo ADD_REGISTRY=\'--add-registry registry.access.redhat.com --add-registry registry.example.com\'>>/etc/sysconfig/docker"
+  #ssh root@$i "echo INSECURE_REGISTRY=\'--insecure-registry registry.example.com:5000\'>>/etc/sysconfig/docker"
+  #ssh root@$i "echo ADD_REGISTRY=\'--add-registry registry.access.redhat.com --add-registry registry.example.com:5000\'>>/etc/sysconfig/docker"
+  ssh root@$i "echo INSECURE_REGISTRY=\'--insecure-registry registry.example.com:5000\'>>/etc/sysconfig/docker"
+  ssh root@$i "echo ADD_REGISTRY=\'--add-registry registry.access.redhat.com --add-registry registry.example.com:5000\'>>/etc/sysconfig/docker"
 done

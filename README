@@ -1,1 +1,1 @@
-Provide tools for upgrade using
+ansible-playbook -i config/ose31nativeha /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/upgrades/v3_1_minor/upgrade.yml

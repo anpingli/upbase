@@ -1,0 +1,34 @@
+[OSEv3:children]
+masters
+nodes
+nfs
+
+[OSEv3:vars]
+ansible_ssh_user=root
+openshift_use_openshift_sdn=true
+deployment_type=openshift-enterprise
+osm_default_subdomain=mini.example.com
+openshift_master_identity_providers=[{'name': 'allow_all', 'login': 'true', 'challenge': 'true', 'kind': 'AllowAllPasswordIdentityProvider'}]
+
+osm_cluster_network_cidr="10.2.0.0/16"
+openshift_master_portal_net="172.31.0.0/16"
+debug_level=5
+cli_docker_additional_registries=virt-openshift-05.lab.eng.nay.redhat.com:5000
+cli_docker_insecure_registries=virt-openshift-05.lab.eng.nay.redhat.com:5000
+
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_nfs_directory=/var/export/
+openshift_hosted_registry_storage_nfs_options='*(rw,sync,all_squash)'
+openshift_hosted_registry_storage_volume_name=registry
+openshift_hosted_registry_storage_volume_size=2G
+
+
+[masters]
+minimaster.example.com
+
+[nodes]
+minimaster.example.com  openshift_node_labels="{'region': 'infra', 'zone': 'default'}" 
+mininode.example.com  openshift_node_labels="{'region': 'primary', 'zone': 'west'}" 
+
+[nfs]
+minimaster.example.com
